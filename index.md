@@ -4,7 +4,7 @@
 
 ### Category Name 1 
 
-[Genetic algorithm for industrial cutting](/cutting_algorithm_page)
+[Genetic algorithm for industrial cutting](/cutting_algorithm_page.md)
 <img src="images/cutting_thumbnail.jpg?raw=true"/>
 
 ---
