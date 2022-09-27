@@ -16,12 +16,42 @@ For the grids, I model them directly in Inkscape, taking care to place the origi
 For the user all this is presented in the form of an interface. Where he will have to specify a desired time limit, which he will confirm. Then he will choose an SVG file on which to run the program. The visual of the starting and ending image is done on Inkscape
 For more information please refer to the commented code.
 
-### 3. Support the selection of appropriate statistical tools and techniques
+### 3. Description of the content of each class :
 
-<img src="images/dummy_thumbnail.jpg?raw=true"/>
+main: svgTest creates a Window (a window performs the requested work on a given image and using a given time).
 
-### 4. Provide a basis for further data collection through surveys or experiments
+Window class: to create our Graphical Interface (window), it allows to retrieve the time given by the user, and the SVG file with all its path (thanks to the SVG class) and create the new SVG file. At the end of the image processing we can immediately ask for the processing of another image as long as we don't close the window.
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+Svg class: class dealing with the processing of an SVG file
+
+Point class: defines a point with two coordinates, it contains all the functions functions related to points such as creation, translation, construction, rotation construction, rotation (with respect to a center and an angle), calculation of distance between two points, or a Bezier curve point according to the parameters required.
+
+Plate class: creates a plate and takes care of the functions related to the plates
+
+Polygon class: creates a polygon using its list of Points, it contains the polygon's rotation and translation functions (which themselves call the Point's functions of rotations and translations of a Point), we also find the initialization function of the number of plates, number of joints/cuts (which also calculates the size of the cuts)
+
+Path class: path management
+
+
+
+
+### 4. Main algorithms:
+
+- Polygon discretization: Initialization of the list of discrete points of the polygon, using the Bézier curve equation to discretize the Bezier curves, and using the segment equations to discretize the segments.
+
+- Polygon translation: Translation of all points in the polygon's point list, and of the polygon's discrete point list.
+
+- Polygon rotation: Rotation of all points in the polygon's point list, and in the polygon's discrete point list, according to the center of gravity of the polygon.
+
+- Computation of the number of plates to cut: Go through the list of discrete points of the polygon, computing for each point the plate where it is located and add this plate to a list of plates, if and only if the plate is not already present in this list. Then final count of the number of plates in the list.
+
+- Computation of the number of cuts: We go through the list of discrete points 2 by 2. Each pair forms a small segment. We check if the segment is cut by a mesh of the grid. If it is the case we calculate the intersection point. And add it to a list of vertical or horizontal intersections depending on the nature of the cut. In the end we have the list of intersection points of vertical cuts and the list of intersection points of horizontal cuts. We add the size of these lists together and divide the whole by two to obtain the number of cuts.
+
+- Calculating the total size of the cuts: Using the two lists previously obtained, it is easy to calculate the total size of the cuts. We sort each list as required, grouping the pairs of intersection points of the same cut together. And we calculate the distance between them. This distance is added to a total that is finally returned.
+
+- Genetic algorithm: Using a DNA composed of three genes (X shift, Y shift, angle) we created a random starting population of 100 DNA strands. We calculate for each strand the number of plates to cut, the number of cuts, and the total size of the cuts. Then we assign a score to each strand according to the results it has had. Knowing that the number of plate is more coefficient than the number of cuts, which is itself more coefficient than the total size of the cuts. We finally sort this population by order of increasing score. It is from now on that the reproduction cycles can begin. Using the reproduction of the best strands (elitism) we create 30 new strands that will replace the 30 worst strands. The reproduction uses cross-over and mutation. The new population is scored and sorted in order of increasing score, and the cycle is repeated. There are as many cycles as the time given by the user allows. At the end of the time, the best DNA is used to create the most optimally placed polygon.
+
+
+
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
