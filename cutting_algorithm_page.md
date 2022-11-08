@@ -1,4 +1,4 @@
-## Genetic algorithm for industrial cuttin
+## Genetic algorithm for industrial cutting
 
 **Project description:** For this project a customer in the industry needed a solution to optimize the cutting of figures in wood panels (1m x 1m). I did a state of the art of what could be done. I finally opted for the implementation of a genetic algorithm.
 
